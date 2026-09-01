@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Ekemini Otu — Data Engineer & Backend Developer</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Source+Sans+3:ital,wght@0,300;0,400;0,600;1,400&display=swap" rel="stylesheet"/>
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  :root {
+    --ink:    #162117;
+    --bg:     #F9FAF8;
+    --accent: #F55F2C;
+    --muted:  #5A6B5C;
+    --light:  #EDF0EB;
+    --border: #D5DCD4;
+    --white:  #FFFFFF;
+    --f-head: 'Space Grotesk', sans-serif;
+    --f-body: 'Source Sans 3', sans-serif;
+  }
+  html { scroll-behavior: smooth; }
+  body { font-family: var(--f-body); background: var(--bg); color: var(--ink); font-size: 18px; line-height: 1.65; -webkit-font-smoothing: antialiased; }
+
+  nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; display: flex; justify-content: space-between; align-items: center; padding: 1.1rem 3rem; background: var(--bg); border-bottom: 1px solid var(--border); }
+  .nav-name { font-family: var(--f-head); font-weight: 600; font-size: 1rem; color: var(--ink); text-decoration: none; }
+  .nav-links { display: flex; gap: 2rem; list-style: none; }
+  .nav-links a { font-size: .9rem; color: var(--muted); text-decoration: none; transition: color .15s; }
+  .nav-links a:hover { color: var(--ink); }
+
+  .hero { min-height: 100vh; display: flex; flex-direction: column; justify-content: flex-end; padding: 0 3rem 4rem; background: var(--ink); position: relative; overflow: hidden; }
+  .hero-bg-text { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); font-family: var(--f-head); font-weight: 700; font-size: clamp(8rem, 22vw, 22rem); color: rgba(255,255,255,.03); white-space: nowrap; user-select: none; pointer-events: none; letter-spacing: -.04em; }
+  .hero-tag { font-size: .85rem; font-weight: 600; color: var(--accent); letter-spacing: .08em; margin-bottom: 1.5rem; opacity: 0; animation: fadeUp .6s .1s forwards; }
+  .hero-name { font-family: var(--f-head); font-weight: 700; font-size: clamp(3.5rem, 9vw, 8.5rem); line-height: .95; letter-spacing: -.03em; color: var(--white); opacity: 0; animation: fadeUp .7s .25s forwards; }
+  .hero-sub { margin-top: 2rem; max-width: 600px; font-size: 1.15rem; line-height: 1.6; color: rgba(255,255,255,.55); opacity: 0; animation: fadeUp .7s .45s forwards; }
+  .hero-meta { margin-top: 2.5rem; display: flex; gap: 2rem; align-items: center; flex-wrap: wrap; opacity: 0; animation: fadeUp .6s .6s forwards; }
+  .hero-location { font-size: .9rem; color: rgba(255,255,255,.4); }
+  .hero-cta { display: inline-block; padding: .65rem 1.75rem; background: var(--accent); color: var(--white); font-family: var(--f-head); font-weight: 600; font-size: .9rem; text-decoration: none; border-radius: 2px; transition: opacity .15s; }
+  .hero-cta:hover { opacity: .85; }
+  @keyframes fadeUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+
+  section { padding: 6rem 3rem; }
+  section + section { border-top: 1px solid var(--border); }
+  .section-label { font-size: .8rem; font-weight: 600; color: var(--muted); letter-spacing: .12em; margin-bottom: 2.5rem; }
+
+  .about-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; align-items: start; }
+  .about-headline { font-family: var(--f-head); font-weight: 600; font-size: clamp(2rem, 3.5vw, 3rem); line-height: 1.15; letter-spacing: -.02em; }
+  .about-headline em { font-style: italic; color: var(--accent); }
+  .about-body { font-size: 1.05rem; color: #3A4A3C; line-height: 1.75; }
+  .about-body p + p { margin-top: 1rem; }
+  .about-stats { margin-top: 2.5rem; display: flex; gap: 3rem; }
+  .stat-num { font-family: var(--f-head); font-size: 2.5rem; font-weight: 700; line-height: 1; }
+  .stat-label { font-size: .85rem; color: var(--muted); margin-top: .25rem; }
+
+  .stack-section { background: var(--ink); }
+  .stack-section .section-label { color: rgba(255,255,255,.4); }
+  .stack-flow { font-family: var(--f-head); font-size: clamp(1.4rem, 2.5vw, 2rem); font-weight: 500; color: rgba(255,255,255,.2); line-height: 2; letter-spacing: -.01em; }
+  .stack-flow span { color: var(--white); cursor: default; transition: color .15s; }
+  .stack-flow span:hover { color: var(--accent); }
+
+  .projects-list { list-style: none; }
+  .project-item { border-top: 1px solid var(--border); padding: 2.5rem 0; display: grid; grid-template-columns: 3fr 1fr; gap: 2rem; align-items: start; }
+  .project-item:last-child { border-bottom: 1px solid var(--border); }
+  .project-number { font-family: var(--f-head); font-size: .8rem; font-weight: 500; color: var(--muted); margin-bottom: .5rem; }
+  .project-name { font-family: var(--f-head); font-size: clamp(1.4rem, 2.5vw, 2rem); font-weight: 600; letter-spacing: -.02em; line-height: 1.2; margin-bottom: .75rem; }
+  .project-desc { font-size: .95rem; color: var(--muted); line-height: 1.65; max-width: 540px; }
+  .project-tags { display: flex; flex-wrap: wrap; gap: .4rem; margin-top: 1rem; }
+  .tag { font-size: .75rem; padding: .2rem .65rem; border: 1px solid var(--border); border-radius: 2px; color: var(--muted); }
+  .project-year { font-family: var(--f-head); font-size: .85rem; color: var(--muted); text-align: right; }
+
+  .exp-list { list-style: none; }
+  .exp-item { display: grid; grid-template-columns: 160px 1fr; gap: 2rem; padding: 2.5rem 0; border-top: 1px solid var(--border); }
+  .exp-item:last-child { border-bottom: 1px solid var(--border); }
+  .exp-period { font-family: var(--f-head); font-size: .85rem; color: var(--muted); padding-top: .2rem; }
+  .exp-role { font-family: var(--f-head); font-size: 1.2rem; font-weight: 600; letter-spacing: -.01em; margin-bottom: .2rem; }
+  .exp-company { font-size: .9rem; color: var(--accent); font-weight: 600; margin-bottom: .75rem; }
+  .exp-bullets { list-style: none; }
+  .exp-bullets li { font-size: .95rem; color: #3A4A3C; line-height: 1.6; padding-left: 1rem; position: relative; margin-bottom: .4rem; }
+  .exp-bullets li::before { content: ''; position: absolute; left: 0; top: .7rem; width: 4px; height: 4px; border-radius: 50%; background: var(--border); }
+
+  .contact-section { background: var(--ink); }
+  .contact-inner { max-width: 700px; }
+  .contact-headline { font-family: var(--f-head); font-size: clamp(2.5rem, 5vw, 4.5rem); font-weight: 700; letter-spacing: -.03em; color: var(--white); line-height: 1.05; margin-bottom: 1.5rem; }
+  .contact-headline span { color: var(--accent); }
+  .contact-sub { font-size: 1.05rem; color: rgba(255,255,255,.5); margin-bottom: 2.5rem; max-width: 500px; line-height: 1.7; }
+  .contact-links { display: flex; gap: 1.5rem; flex-wrap: wrap; }
+  .contact-link { font-family: var(--f-head); font-size: .95rem; font-weight: 500; color: rgba(255,255,255,.6); text-decoration: none; border-bottom: 1px solid rgba(255,255,255,.15); padding-bottom: .15rem; transition: color .15s, border-color .15s; }
+  .contact-link:hover { color: var(--white); border-color: rgba(255,255,255,.5); }
+  .contact-link.primary { color: var(--white); border-color: var(--accent); }
+  .contact-link.primary:hover { color: var(--accent); }
+
+  footer { padding: 1.5rem 3rem; border-top: 1px solid rgba(255,255,255,.08); display: flex; justify-content: space-between; background: var(--ink); }
+  footer span { font-size: .8rem; color: rgba(255,255,255,.25); }
+
+  @media (max-width: 768px) {
+    nav { padding: 1rem 1.5rem; }
+    .nav-links { gap: 1rem; }
+    .nav-links a { font-size: .8rem; }
+    section { padding: 4rem 1.5rem; }
+    .hero { padding: 0 1.5rem 3rem; }
+    .about-grid { grid-template-columns: 1fr; gap: 2.5rem; }
+    .exp-item { grid-template-columns: 1fr; gap: .5rem; }
+    .project-item { grid-template-columns: 1fr; }
+    .project-year { text-align: left; }
+    footer { padding: 1.5rem; flex-direction: column; gap: .5rem; }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .hero-tag, .hero-name, .hero-sub, .hero-meta { animation: none; opacity: 1; }
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <a href="#" class="nav-name">Ekemini Otu</a>
+  <ul class="nav-links">
+    <li><a href="#about">About</a></li>
+    <li><a href="#stack">Stack</a></li>
+    <li><a href="#projects">Projects</a></li>
+    <li><a href="#experience">Experience</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+</nav>
+
+<section class="hero">
+  <div class="hero-bg-text">EO</div>
+  <div class="hero-tag">Data Engineer &nbsp;&middot;&nbsp; Backend Developer &nbsp;&middot;&nbsp; Open to Remote</div>
+  <h1 class="hero-name">Ekemini<br/>Otu</h1>
+  <p class="hero-sub">I build the pipelines, APIs, and systems that make data reliable, fast, and useful — across the modern data stack and backend infrastructure.</p>
+  <div class="hero-meta">
+    <a href="#contact" class="hero-cta">Get in touch</a>
+    <span class="hero-location">Abuja, Nigeria &nbsp;&middot;&nbsp; Available worldwide</span>
+  </div>
+</section>
+
+<section id="about">
+  <div class="section-label">About</div>
+  <div class="about-grid">
+    <div>
+      <h2 class="about-headline">Five years building things that <em>actually run</em> in production.</h2>
+      <div class="about-stats">
+        <div><div class="stat-num">5+</div><div class="stat-label">Years experience</div></div>
+        <div><div class="stat-num">2</div><div class="stat-label">Companies</div></div>
+        <div><div class="stat-num">5+</div><div class="stat-label">Projects shipped</div></div>
+      </div>
+    </div>
+    <div class="about-body">
+      <p>I'm a Data Engineer and Backend Developer based in Abuja, Nigeria, available for remote roles globally. My work spans the full journey data takes — from raw ingestion through transformation, warehousing, and serving — using the modern data stack and backend microservices.</p>
+      <p>I've spent time at 7seer and Artvion designing ETL pipelines, building FastAPI services, containerising systems with Docker on AWS, and applying machine learning to real prediction problems.</p>
+      <p>I hold a BSc in Chemistry from the University of Uyo and a Data Engineering certificate from DataTalks.Club. I debug methodically, document decisions, and ship things that hold up under load.</p>
+    </div>
+  </div>
+</section>
+
+<section id="stack" class="stack-section">
+  <div class="section-label">Technical Stack</div>
+  <div class="stack-flow">
+    <span>Python</span> &nbsp;&middot;&nbsp; <span>SQL</span> &nbsp;&middot;&nbsp; <span>Apache Airflow</span> &nbsp;&middot;&nbsp; <span>dbt</span> &nbsp;&middot;&nbsp; <span>Snowflake</span> &nbsp;&middot;&nbsp; <span>Apache Kafka</span> &nbsp;&middot;&nbsp; <span>Apache Spark</span> &nbsp;&middot;&nbsp; <span>FastAPI</span> &nbsp;&middot;&nbsp; <span>PostgreSQL</span> &nbsp;&middot;&nbsp; <span>Redis</span> &nbsp;&middot;&nbsp; <span>Docker</span> &nbsp;&middot;&nbsp; <span>AWS</span> &nbsp;&middot;&nbsp; <span>Scikit-learn</span> &nbsp;&middot;&nbsp; <span>Pandas</span> &nbsp;&middot;&nbsp; <span>BeautifulSoup</span> &nbsp;&middot;&nbsp; <span>Scrapy</span> &nbsp;&middot;&nbsp; <span>Playwright</span> &nbsp;&middot;&nbsp; <span>Selenium</span> &nbsp;&middot;&nbsp; <span>nginx</span> &nbsp;&middot;&nbsp; <span>Random Forest</span> &nbsp;&middot;&nbsp; <span>ETL / ELT Pipelines</span> &nbsp;&middot;&nbsp; <span>Data Modelling</span> &nbsp;&middot;&nbsp; <span>Microservices</span> &nbsp;&middot;&nbsp; <span>REST APIs</span> &nbsp;&middot;&nbsp; <span>CI / CD</span> &nbsp;&middot;&nbsp; <span>Linux</span>
+  </div>
+</section>
+
+<section id="projects">
+  <div class="section-label">Selected Projects</div>
+  <ul class="projects-list">
+    <li class="project-item">
+      <div>
+        <div class="project-number">01</div>
+        <div class="project-name">Real-Time Streaming Pipeline</div>
+        <div class="project-desc">End-to-end pipeline ingesting live event data through Kafka producers, processing with Spark Structured Streaming, and loading to Snowflake — demonstrating CDC, streaming vs batch trade-offs, and Airflow orchestration.</div>
+        <div class="project-tags"><span class="tag">Kafka</span><span class="tag">Spark</span><span class="tag">Snowflake</span><span class="tag">Airflow</span><span class="tag">Python</span></div>
+      </div>
+      <div class="project-year">Data Engineering</div>
+    </li>
+    <li class="project-item">
+      <div>
+        <div class="project-number">02</div>
+        <div class="project-name">Global Rate Limiter as a Service</div>
+        <div class="project-desc">Distributed token-bucket rate limiter with atomic Redis Lua scripts — zero race conditions under concurrent load. Full FastAPI backend, PostgreSQL persistence, Docker Compose deployment, and Locust load testing.</div>
+        <div class="project-tags"><span class="tag">FastAPI</span><span class="tag">Redis</span><span class="tag">PostgreSQL</span><span class="tag">Docker</span><span class="tag">nginx</span><span class="tag">AWS</span></div>
+      </div>
+      <div class="project-year">Backend</div>
+    </li>
+    <li class="project-item">
+      <div>
+        <div class="project-number">03</div>
+        <div class="project-name">Football Match Outcome Predictor</div>
+        <div class="project-desc">Full ML system: Dixon-Coles statistical model, walk-forward backtest harness for model evaluation, and a FastAPI dashboard serving real-time match predictions. End-to-end from data to API to interface.</div>
+        <div class="project-tags"><span class="tag">Python</span><span class="tag">FastAPI</span><span class="tag">Dixon-Coles</span><span class="tag">Backtesting</span><span class="tag">ML</span></div>
+      </div>
+      <div class="project-year">Machine Learning</div>
+    </li>
+    <li class="project-item">
+      <div>
+        <div class="project-number">04</div>
+        <div class="project-name">Olist E-Commerce Analytics Platform</div>
+        <div class="project-desc">Analytics engineering on the Olist dataset: medallion architecture (bronze/silver/gold), dbt models with full test coverage, auto-generated docs, Airflow orchestration, and Snowflake as the warehouse layer.</div>
+        <div class="project-tags"><span class="tag">dbt</span><span class="tag">Snowflake</span><span class="tag">Airflow</span><span class="tag">Python</span></div>
+      </div>
+      <div class="project-year">Analytics Engineering</div>
+    </li>
+    <li class="project-item">
+      <div>
+        <div class="project-number">05</div>
+        <div class="project-name">Netflix ETL Pipeline</div>
+        <div class="project-desc">Production-style ELT pipeline: raw source extraction, dbt transformation models, Snowflake data warehouse loading — demonstrating Airflow DAG design and warehouse modelling best practices.</div>
+        <div class="project-tags"><span class="tag">Python</span><span class="tag">Airflow</span><span class="tag">Snowflake</span><span class="tag">dbt</span></div>
+      </div>
+      <div class="project-year">Data Engineering</div>
+    </li>
+  </ul>
+</section>
+
+<section id="experience" style="background: var(--light);">
+  <div class="section-label">Experience</div>
+  <ul class="exp-list">
+    <li class="exp-item">
+      <div class="exp-period">2021 — Present</div>
+      <div>
+        <div class="exp-role">Backend Engineer / Python Developer</div>
+        <div class="exp-company">7seer &nbsp;&middot;&nbsp; Hybrid, Abuja</div>
+        <ul class="exp-bullets">
+          <li>Built and maintained Python integration pipelines loading into PostgreSQL in production</li>
+          <li>Deployed FastAPI microservices containerised with Docker on AWS infrastructure</li>
+          <li>Implemented distributed rate-limiting service with atomic Redis Lua scripts — zero race conditions under Locust load testing</li>
+          <li>Applied ML classification models to structured datasets, served via FastAPI dashboard</li>
+          <li>Managed CI/CD workflows and monitored production systems for reliability</li>
+        </ul>
+      </div>
+    </li>
+    <li class="exp-item">
+      <div class="exp-period">2019 — 2021</div>
+      <div>
+        <div class="exp-role">Python Developer / Data Engineer</div>
+        <div class="exp-company">Artvion &nbsp;&middot;&nbsp; Remote</div>
+        <ul class="exp-bullets">
+          <li>Wrote and maintained Python integration scripts for extracting and loading data into structured databases</li>
+          <li>Built backend data pipelines processing large datasets with Pandas and SQL</li>
+          <li>Delivered web scraping solutions using Scrapy, BeautifulSoup, and Octoparse</li>
+        </ul>
+      </div>
+    </li>
+  </ul>
+</section>
+
+<section id="contact" class="contact-section">
+  <div class="contact-inner">
+    <h2 class="contact-headline">Let's build something <span>reliable</span> together.</h2>
+    <p class="contact-sub">Open to full-time remote roles, contract engagements, and freelance projects globally. Data engineering, backend development, or anything in between.</p>
+    <div class="contact-links">
+      <a href="mailto:ekeminiotu@email.com" class="contact-link primary">ekeminiotu@email.com</a>
+      <a href="https://linkedin.com/in/ekeminiotu" class="contact-link" target="_blank">LinkedIn</a>
+      <a href="https://github.com/EkeminiImeOtu" class="contact-link" target="_blank">GitHub</a>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <span>Ekemini Otu &nbsp;&middot;&nbsp; Abuja, Nigeria</span>
+  <span>Data Engineer &nbsp;&middot;&nbsp; Backend Developer</span>
+</footer>
+
+</body>
+</html>
