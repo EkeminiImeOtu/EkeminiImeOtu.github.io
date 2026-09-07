@@ -67,6 +67,8 @@
   .stack-flow span:hover { color: var(--accent); }
 
   .projects-list { list-style: none; }
+  .projects-note { font-size: .98rem; color: var(--muted); line-height: 1.65; max-width: 640px; margin: -1.6rem 0 1.75rem; }
+  .projects-note strong { color: var(--ink); }
   .project-item { border-top: 1px solid var(--border); padding: 2.5rem 0; display: grid; grid-template-columns: 3fr 1fr; gap: 2rem; align-items: start; }
   .project-item:last-child { border-bottom: 1px solid var(--border); }
   .project-number { font-family: var(--f-head); font-size: .8rem; font-weight: 500; color: var(--muted); margin-bottom: .5rem; }
@@ -150,14 +152,15 @@
       <h2 class="about-headline">Five years building things that <em>actually run</em> in production.</h2>
       <div class="about-stats">
         <div class="stat-card"><div class="stat-num">5+</div><div class="stat-label">Years experience</div></div>
-        <div class="stat-card"><div class="stat-num">2</div><div class="stat-label">Companies</div></div>
-        <div class="stat-card"><div class="stat-num">6</div><div class="stat-label">Projects shipped</div></div>
+        <div class="stat-card"><div class="stat-num">100+</div><div class="stat-label">Client projects · NDA</div></div>
+        <div class="stat-card"><div class="stat-num">6</div><div class="stat-label">Projects shipped in public</div></div>
         <div class="stat-card stat-accent"><div class="stat-num">17<span class="arrow">→</span></div><div class="stat-label">More coming September 2026</div></div>
       </div>
     </div>
     <div class="about-body">
-      <p>I'm a Data Engineer and Backend Developer based in Abuja, Nigeria, available for remote roles globally. My work spans the full journey data takes — from raw ingestion through transformation, warehousing, and serving — using the modern data stack and backend microservices.</p>
-      <p>I've spent time at 7seer and Artvion designing ETL pipelines, building FastAPI services, containerising systems with Docker on AWS, and applying machine learning to real prediction problems.</p>
+      <p>I'm a Data Engineer and Backend Developer based in Abuja, Nigeria, available for remote roles globally. For five years I've built production systems for clients — <strong>100+ projects</strong> across data engineering pipelines, web scraping, GUI applications, and no-code automation (Octoparse, Playwright, Scrapy, and the modern Python stack). Most of that work sits under <strong>NDA</strong>, so it's not listed here — ask me about it on a call.</p>
+      <p>Recently I decided to build out loud: I'm shipping <strong>personal projects in public</strong> — beginner, intermediate, and advanced builds spanning lakehouse engineering, streaming, ETL/ELT, and backend — so you can see exactly how I think, test, and document.</p>
+      <p>I also teach. I run small cohorts where students go from their first Python script to a deployed project, supported by a structured learning platform and hands-on mentoring.</p>
       <p>I hold a BSc in Chemistry from the University of Uyo and a Data Engineering certificate from DataTalks.Club. I debug methodically, document decisions, and ship things that hold up under load.</p>
     </div>
   </div>
@@ -172,6 +175,7 @@
 
 <section id="projects">
   <div class="section-label">Selected Projects</div>
+  <p class="projects-note">Client work from the past five years is under NDA and not shown publicly. These are my personal, public builds — a spread of beginner, intermediate, and advanced projects — plus more shipping through September 2026.</p>
   <ul class="projects-list">
     <li class="project-item">
       <div>
@@ -265,7 +269,7 @@
 <section id="contact" class="contact-section">
   <div class="contact-inner">
     <h2 class="contact-headline">Let's build something <span>reliable</span> together.</h2>
-    <p class="contact-sub">Open to full-time remote roles, contract engagements, and freelance projects globally. Data engineering, backend development, or anything in between.</p>
+    <p class="contact-sub">Open to full-time remote roles, contract and freelance engagements, and student mentoring — data engineering, backend development, or anything in between.</p>
     <div class="contact-links">
       <a href="mailto:ekeminiimeotu@gmail.com" class="contact-link primary">ekeminiimeotu@gmail.com</a>
       <a href="https://linkedin.com/in/ekeminiotu" class="contact-link" target="_blank">LinkedIn</a>
