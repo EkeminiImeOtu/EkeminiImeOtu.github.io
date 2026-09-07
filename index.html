@@ -49,9 +49,16 @@
   .about-headline em { font-style: italic; color: var(--accent); }
   .about-body { font-size: 1.05rem; color: #3A4A3C; line-height: 1.75; }
   .about-body p + p { margin-top: 1rem; }
-  .about-stats { margin-top: 2.5rem; display: flex; gap: 3rem; }
-  .stat-num { font-family: var(--f-head); font-size: 2.5rem; font-weight: 700; line-height: 1; }
-  .stat-label { font-size: .85rem; color: var(--muted); margin-top: .25rem; }
+  .about-stats { margin-top: 2.5rem; display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; max-width: 420px; }
+  .stat-card { background: var(--white); border: 1px solid var(--border); border-radius: 14px; padding: 1.25rem 1.4rem 1.3rem; position: relative; overflow: hidden; transition: transform .2s, box-shadow .2s; }
+  .stat-card::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px; background: var(--ink); }
+  .stat-card:hover { transform: translateY(-3px); box-shadow: 0 14px 34px -16px rgba(22,33,23,.28); }
+  .stat-card.stat-accent { border-color: var(--accent); }
+  .stat-card.stat-accent::before { background: var(--accent); }
+  .stat-card.stat-accent .stat-num { color: var(--accent); }
+  .stat-num { font-family: var(--f-head); font-size: 2.3rem; font-weight: 700; line-height: 1; }
+  .stat-num .arrow { font-size: 1.2rem; color: var(--ink); margin-left: .15rem; }
+  .stat-label { font-size: .74rem; color: var(--muted); margin-top: .55rem; text-transform: uppercase; letter-spacing: .09em; font-weight: 600; }
 
   .stack-section { background: var(--ink); }
   .stack-section .section-label { color: rgba(255,255,255,.4); }
@@ -64,6 +71,8 @@
   .project-item:last-child { border-bottom: 1px solid var(--border); }
   .project-number { font-family: var(--f-head); font-size: .8rem; font-weight: 500; color: var(--muted); margin-bottom: .5rem; }
   .project-name { font-family: var(--f-head); font-size: clamp(1.4rem, 2.5vw, 2rem); font-weight: 600; letter-spacing: -.02em; line-height: 1.2; margin-bottom: .75rem; }
+  .project-name a { color: var(--ink); text-decoration: none; transition: color .15s; border-bottom: 2px solid transparent; }
+  .project-name a:hover { color: var(--accent); border-bottom-color: var(--accent); }
   .project-desc { font-size: .95rem; color: var(--muted); line-height: 1.65; max-width: 540px; }
   .project-tags { display: flex; flex-wrap: wrap; gap: .4rem; margin-top: 1rem; }
   .tag { font-size: .75rem; padding: .2rem .65rem; border: 1px solid var(--border); border-radius: 2px; color: var(--muted); }
@@ -140,9 +149,10 @@
     <div>
       <h2 class="about-headline">Five years building things that <em>actually run</em> in production.</h2>
       <div class="about-stats">
-        <div><div class="stat-num">5+</div><div class="stat-label">Years experience</div></div>
-        <div><div class="stat-num">2</div><div class="stat-label">Companies</div></div>
-        <div><div class="stat-num">5+</div><div class="stat-label">Projects shipped</div></div>
+        <div class="stat-card"><div class="stat-num">5+</div><div class="stat-label">Years experience</div></div>
+        <div class="stat-card"><div class="stat-num">2</div><div class="stat-label">Companies</div></div>
+        <div class="stat-card"><div class="stat-num">6</div><div class="stat-label">Projects shipped</div></div>
+        <div class="stat-card stat-accent"><div class="stat-num">17<span class="arrow">→</span></div><div class="stat-label">More coming September 2026</div></div>
       </div>
     </div>
     <div class="about-body">
@@ -156,7 +166,7 @@
 <section id="stack" class="stack-section">
   <div class="section-label">Technical Stack</div>
   <div class="stack-flow">
-    <span>Python</span> &nbsp;&middot;&nbsp; <span>SQL</span> &nbsp;&middot;&nbsp; <span>Apache Airflow</span> &nbsp;&middot;&nbsp; <span>dbt</span> &nbsp;&middot;&nbsp; <span>Snowflake</span> &nbsp;&middot;&nbsp; <span>Apache Kafka</span> &nbsp;&middot;&nbsp; <span>Apache Spark</span> &nbsp;&middot;&nbsp; <span>FastAPI</span> &nbsp;&middot;&nbsp; <span>PostgreSQL</span> &nbsp;&middot;&nbsp; <span>Redis</span> &nbsp;&middot;&nbsp; <span>Docker</span> &nbsp;&middot;&nbsp; <span>AWS</span> &nbsp;&middot;&nbsp; <span>Scikit-learn</span> &nbsp;&middot;&nbsp; <span>Pandas</span> &nbsp;&middot;&nbsp; <span>BeautifulSoup</span> &nbsp;&middot;&nbsp; <span>Scrapy</span> &nbsp;&middot;&nbsp; <span>Playwright</span> &nbsp;&middot;&nbsp; <span>Selenium</span> &nbsp;&middot;&nbsp; <span>nginx</span> &nbsp;&middot;&nbsp; <span>Random Forest</span> &nbsp;&middot;&nbsp; <span>ETL / ELT Pipelines</span> &nbsp;&middot;&nbsp; <span>Data Modelling</span> &nbsp;&middot;&nbsp; <span>Microservices</span> &nbsp;&middot;&nbsp; <span>REST APIs</span> &nbsp;&middot;&nbsp; <span>CI / CD</span> &nbsp;&middot;&nbsp; <span>Linux</span>
+    <span>Python</span> &nbsp;&middot;&nbsp; <span>SQL</span> &nbsp;&middot;&nbsp; <span>Databricks</span> &nbsp;&middot;&nbsp; <span>Delta Lake</span> &nbsp;&middot;&nbsp; <span>Apache Airflow</span> &nbsp;&middot;&nbsp; <span>dbt</span> &nbsp;&middot;&nbsp; <span>Snowflake</span> &nbsp;&middot;&nbsp; <span>Apache Kafka</span> &nbsp;&middot;&nbsp; <span>Apache Spark</span> &nbsp;&middot;&nbsp; <span>FastAPI</span> &nbsp;&middot;&nbsp; <span>PostgreSQL</span> &nbsp;&middot;&nbsp; <span>Redis</span> &nbsp;&middot;&nbsp; <span>Docker</span> &nbsp;&middot;&nbsp; <span>AWS</span> &nbsp;&middot;&nbsp; <span>Scikit-learn</span> &nbsp;&middot;&nbsp; <span>Pandas</span> &nbsp;&middot;&nbsp; <span>BeautifulSoup</span> &nbsp;&middot;&nbsp; <span>Scrapy</span> &nbsp;&middot;&nbsp; <span>Playwright</span> &nbsp;&middot;&nbsp; <span>Selenium</span> &nbsp;&middot;&nbsp; <span>nginx</span> &nbsp;&middot;&nbsp; <span>Random Forest</span> &nbsp;&middot;&nbsp; <span>ETL / ELT Pipelines</span> &nbsp;&middot;&nbsp; <span>Data Modelling</span> &nbsp;&middot;&nbsp; <span>Microservices</span> &nbsp;&middot;&nbsp; <span>REST APIs</span> &nbsp;&middot;&nbsp; <span>CI / CD</span> &nbsp;&middot;&nbsp; <span>Linux</span>
   </div>
 </section>
 
@@ -166,7 +176,16 @@
     <li class="project-item">
       <div>
         <div class="project-number">01</div>
-        <div class="project-name">Real-Time Streaming Pipeline</div>
+        <div class="project-name"><a href="projects/shopstream/index.html">ShopStream — End-to-End Databricks Lakehouse</a></div>
+        <div class="project-desc">Production-style lakehouse on Databricks Community Edition: real 100k-order e-commerce data through a medallion pipeline — idempotent COPY INTO batch ingestion, Auto Loader exactly-once streaming, bronze/silver/gold layers, a star-schema fact model, and cost-aware partitioning with analytical SQL.</div>
+        <div class="project-tags"><span class="tag">Databricks</span><span class="tag">Delta Lake</span><span class="tag">PySpark</span><span class="tag">Structured Streaming</span><span class="tag">SQL</span></div>
+      </div>
+      <div class="project-year">Data Engineering</div>
+    </li>
+    <li class="project-item">
+      <div>
+        <div class="project-number">02</div>
+        <div class="project-name"><a href="https://github.com/EkeminiImeOtu/netflix-streaming-pipeline" target="_blank" rel="noopener">Real-Time Streaming Pipeline</a></div>
         <div class="project-desc">End-to-end pipeline ingesting live event data through Kafka producers, processing with Spark Structured Streaming, and loading to Snowflake — demonstrating CDC, streaming vs batch trade-offs, and Airflow orchestration.</div>
         <div class="project-tags"><span class="tag">Kafka</span><span class="tag">Spark</span><span class="tag">Snowflake</span><span class="tag">Airflow</span><span class="tag">Python</span></div>
       </div>
@@ -174,8 +193,8 @@
     </li>
     <li class="project-item">
       <div>
-        <div class="project-number">02</div>
-        <div class="project-name">Global Rate Limiter as a Service</div>
+        <div class="project-number">03</div>
+        <div class="project-name"><a href="https://github.com/EkeminiImeOtu/global-rate-limiter-service" target="_blank" rel="noopener">Global Rate Limiter as a Service</a></div>
         <div class="project-desc">Distributed token-bucket rate limiter with atomic Redis Lua scripts — zero race conditions under concurrent load. Full FastAPI backend, PostgreSQL persistence, Docker Compose deployment, and Locust load testing.</div>
         <div class="project-tags"><span class="tag">FastAPI</span><span class="tag">Redis</span><span class="tag">PostgreSQL</span><span class="tag">Docker</span><span class="tag">nginx</span><span class="tag">AWS</span></div>
       </div>
@@ -183,8 +202,8 @@
     </li>
     <li class="project-item">
       <div>
-        <div class="project-number">03</div>
-        <div class="project-name">Football Match Outcome Predictor</div>
+        <div class="project-number">04</div>
+        <div class="project-name"><a href="https://github.com/EkeminiImeOtu/artvion-football-tips" target="_blank" rel="noopener">Football Match Outcome Predictor</a></div>
         <div class="project-desc">Full ML system: Dixon-Coles statistical model, walk-forward backtest harness for model evaluation, and a FastAPI dashboard serving real-time match predictions. End-to-end from data to API to interface.</div>
         <div class="project-tags"><span class="tag">Python</span><span class="tag">FastAPI</span><span class="tag">Dixon-Coles</span><span class="tag">Backtesting</span><span class="tag">ML</span></div>
       </div>
@@ -192,8 +211,8 @@
     </li>
     <li class="project-item">
       <div>
-        <div class="project-number">04</div>
-        <div class="project-name">Olist E-Commerce Analytics Platform</div>
+        <div class="project-number">05</div>
+        <div class="project-name"><a href="https://github.com/EkeminiImeOtu/olist-ecommerce-pipeline" target="_blank" rel="noopener">Olist E-Commerce Analytics Platform</a></div>
         <div class="project-desc">Analytics engineering on the Olist dataset: medallion architecture (bronze/silver/gold), dbt models with full test coverage, auto-generated docs, Airflow orchestration, and Snowflake as the warehouse layer.</div>
         <div class="project-tags"><span class="tag">dbt</span><span class="tag">Snowflake</span><span class="tag">Airflow</span><span class="tag">Python</span></div>
       </div>
@@ -201,8 +220,8 @@
     </li>
     <li class="project-item">
       <div>
-        <div class="project-number">05</div>
-        <div class="project-name">Netflix ETL Pipeline</div>
+        <div class="project-number">06</div>
+        <div class="project-name"><a href="https://github.com/EkeminiImeOtu/netflix-etl-pipeline" target="_blank" rel="noopener">Netflix ETL Pipeline</a></div>
         <div class="project-desc">Production-style ELT pipeline: raw source extraction, dbt transformation models, Snowflake data warehouse loading — demonstrating Airflow DAG design and warehouse modelling best practices.</div>
         <div class="project-tags"><span class="tag">Python</span><span class="tag">Airflow</span><span class="tag">Snowflake</span><span class="tag">dbt</span></div>
       </div>

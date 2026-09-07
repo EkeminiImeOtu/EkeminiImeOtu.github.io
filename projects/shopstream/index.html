@@ -1,0 +1,303 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>ShopStream — End-to-End Databricks Lakehouse | Ekemini Otu</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Source+Sans+3:ital,wght@0,300;0,400;0,600;1,400&display=swap" rel="stylesheet"/>
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  :root {
+    --ink:    #162117;
+    --bg:     #F9FAF8;
+    --accent: #F55F2C;
+    --muted:  #5A6B5C;
+    --light:  #EDF0EB;
+    --border: #D5DCD4;
+    --white:  #FFFFFF;
+    --f-head: 'Space Grotesk', sans-serif;
+    --f-body: 'Source Sans 3', sans-serif;
+  }
+  body { font-family: var(--f-body); background: var(--bg); color: var(--ink); font-size: 18px; line-height: 1.65; -webkit-font-smoothing: antialiased; }
+
+  nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; display: flex; justify-content: space-between; align-items: center; padding: 1.1rem 3rem; background: var(--bg); border-bottom: 1px solid var(--border); }
+  .nav-name { font-family: var(--f-head); font-weight: 600; font-size: 1rem; color: var(--ink); text-decoration: none; }
+  .nav-links { display: flex; gap: 2rem; list-style: none; }
+  .nav-links a { font-size: .9rem; color: var(--muted); text-decoration: none; transition: color .15s; }
+  .nav-links a:hover { color: var(--ink); }
+  .nav-links a.back { color: var(--accent); font-weight: 600; }
+
+  .page-hero { padding: 9rem 3rem 4rem; background: var(--ink); color: var(--white); }
+  .crumb { font-size: .8rem; font-weight: 600; color: var(--accent); letter-spacing: .1em; text-transform: uppercase; margin-bottom: 1.25rem; }
+  .page-hero h1 { font-family: var(--f-head); font-weight: 700; font-size: clamp(2.6rem, 6vw, 5rem); line-height: 1; letter-spacing: -.03em; }
+  .page-hero h1 span { color: var(--accent); }
+  .hero-sub { margin-top: 1.5rem; max-width: 720px; font-size: 1.15rem; color: rgba(255,255,255,.6); line-height: 1.6; }
+  .hero-chips { margin-top: 2rem; display: flex; gap: .6rem; flex-wrap: wrap; }
+  .chip { font-size: .8rem; font-weight: 600; padding: .35rem .9rem; border: 1px solid rgba(255,255,255,.2); border-radius: 999px; color: rgba(255,255,255,.85); }
+  .chip.gold { border-color: rgba(245,95,44,.6); color: var(--accent); }
+  .chip.src { background: var(--accent); color: #fff; border-color: var(--accent); font-weight: 700; text-decoration: none; }
+  .chip.src:hover { filter: brightness(1.08); }
+
+  section { padding: 5rem 3rem; }
+  section + section { border-top: 1px solid var(--border); }
+  .wrap { max-width: 1060px; margin: 0 auto; }
+  .section-label { font-size: .8rem; font-weight: 600; color: var(--muted); letter-spacing: .12em; margin-bottom: 1.5rem; text-transform: uppercase; }
+  h2.block { font-family: var(--f-head); font-size: clamp(1.8rem, 3vw, 2.6rem); font-weight: 600; letter-spacing: -.02em; margin-bottom: 1.25rem; }
+  p.lead { font-size: 1.08rem; color: #3A4A3C; line-height: 1.75; max-width: 820px; }
+
+  .arch-frame-wrap { margin-top: 1.5rem; }
+  .arch-frame { width: 100%; height: 900px; border: 1px solid var(--border); border-radius: 12px; background: #0B1220; }
+  .arch-open { display: inline-block; margin-top: .8rem; font-size: .9rem; color: var(--accent); text-decoration: none; font-weight: 600; }
+  .arch-open:hover { text-decoration: underline; }
+
+  .grid-4 { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1.4rem; }
+  .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 1.4rem; }
+  .layer { border: 1px solid var(--border); border-radius: 12px; padding: 1.5rem; background: var(--white); }
+  .layer .dot { display: inline-block; width: 10px; height: 10px; border-radius: 50%; margin-right: .5rem; }
+  .dot.bronze { background: #E8933C; } .dot.silver { background: #9FB4D0; } .dot.gold { background: #FFD94D; } .dot.cyan { background: #3CCCE8; }
+  .layer h3 { font-family: var(--f-head); font-size: 1.15rem; font-weight: 600; display: flex; align-items: center; margin-bottom: .4rem; }
+  .layer .tbl-note { font-size: .85rem; color: var(--muted); }
+  .layer ul { list-style: none; margin-top: .9rem; }
+  .layer li { font-size: .88rem; color: #3A4A3C; font-family: 'Cascadia Code', Consolas, monospace; padding: .18rem 0; border-bottom: 1px dashed var(--border); }
+  .layer li:last-child { border-bottom: none; }
+  .layer p { font-size: .9rem; color: var(--muted); margin-top: .75rem; line-height: 1.5; }
+
+  .finding { border: 1px solid var(--border); border-left: 4px solid var(--accent); background: var(--white); border-radius: 8px; padding: 1.1rem 1.4rem; margin-bottom: 1rem; }
+  .finding b { font-family: var(--f-head); }
+  .finding p { font-size: .95rem; color: #3A4A3C; margin-top: .25rem; }
+
+  .metric-row { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.4rem; margin-top: 1rem; }
+  .metric { border: 1px solid var(--border); border-radius: 12px; padding: 1.4rem; background: var(--white); }
+  .metric .num { font-family: var(--f-head); font-size: 1.9rem; font-weight: 700; color: var(--ink); }
+  .metric .lbl { font-size: .85rem; color: var(--muted); margin-top: .2rem; }
+
+  .gallery { display: grid; grid-template-columns: 1fr 1fr; gap: 1.4rem; }
+  .gal-group { margin-top: 2.4rem; }
+  .gal-group:first-of-type { margin-top: 0; }
+  .gal-group h3 { font-family: var(--f-head); font-size: 1.02rem; font-weight: 600; color: var(--ink); margin-bottom: 1rem; letter-spacing: .01em; }
+  .gal-group h3 span { color: var(--accent); }
+  .shot { border: 1px solid var(--border); border-radius: 12px; overflow: hidden; background: var(--white); }
+  .shot img { display: block; width: 100%; height: auto; min-height: 240px; object-fit: cover; background: var(--light); }
+  .shot .cap { font-size: .85rem; color: var(--muted); padding: .7rem 1rem; }
+
+  .learn { list-style: none; margin-top: 1rem; }
+  .learn li { font-size: 1rem; color: #3A4A3C; padding-left: 1.4rem; position: relative; margin-bottom: .6rem; max-width: 820px; }
+  .learn li::before { content: '▸'; position: absolute; left: 0; top: 0; color: var(--accent); font-weight: 700; }
+
+  .next-card { border: 1px solid var(--border); border-left: 4px solid var(--accent); background: var(--light); border-radius: 8px; padding: 1.4rem 1.6rem; margin-top: .8rem; }
+  .next-card b { font-family: var(--f-head); }
+
+  @media (max-width: 768px) {
+    nav { padding: 1rem 1.5rem; }
+    .nav-links { gap: 1rem; }
+    nav .nav-links a:not(.back) { display: none; }
+    .page-hero, section { padding-left: 1.5rem; padding-right: 1.5rem; }
+    .grid-4, .grid-2, .metric-row { grid-template-columns: 1fr; }
+    .gallery { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <a href="../index.html" class="nav-name">Ekemini Otu</a>
+  <ul class="nav-links">
+    <li><a href="../index.html" class="back">← Projects</a></li>
+    <li><a href="../index.html#about">About</a></li>
+    <li><a href="../index.html#contact">Contact</a></li>
+  </ul>
+</nav>
+
+<div class="page-hero">
+  <div class="wrap" style="max-width:1060px;margin:0 auto;">
+    <div class="crumb">Project 01 · Data Engineering</div>
+    <h1>Shop<Span>Stream</Span></h1>
+    <p class="hero-sub">An end-to-end lakehouse on Databricks Community Edition — built 100% free. Real 100,000-order e-commerce data flows through a medallion architecture on Delta Lake: idempotent batch ingestion, Auto Loader streaming, star-schema analytics, and cost-aware partitioning.</p>
+    <div class="hero-chips">
+      <span class="chip">Databricks</span>
+      <span class="chip">Delta Lake</span>
+      <span class="chip">PySpark</span>
+      <span class="chip">SQL</span>
+      <span class="chip">Structured Streaming</span>
+      <span class="chip gold">Medallion Architecture</span>
+      <span class="chip gold">Built free on Community Edition</span>
+      <a class="chip gold src" href="https://github.com/EkeminiImeOtu/ShopStream" target="_blank" rel="noopener">View notebooks on GitHub ↗</a>
+    </div>
+  </div>
+</div>
+
+<section>
+  <div class="wrap">
+    <div class="section-label">01 · Overview</div>
+    <h2 class="block">From raw CSVs to dashboard-ready analytics.</h2>
+    <p class="lead">ShopStream is a production-style pipeline on the Brazilian E-Commerce by Olist dataset (real anonymized marketplace data, 2016–2018, 9 tables). It follows the medallion pattern every modern data team uses: an immutable bronze landing zone, a validated and deduplicated silver layer, and a business-ready gold star schema — unified with declarative Delta Live Tables logic and served through analytical SQL.</p>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <div class="section-label">02 · Architecture</div>
+    <h2 class="block">How the pipeline is wired.</h2>
+    <div class="arch-frame-wrap">
+      <iframe class="arch-frame" src="shopstream-architecture.html" loading="lazy" title="ShopStream architecture diagram"></iframe>
+    </div>
+    <a class="arch-open" href="shopstream-architecture.html" target="_blank">Open full-size architecture diagram ↗</a>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <div class="section-label">03 · The Pipeline</div>
+    <h2 class="block">Four layers, one flow.</h2>
+    <div class="grid-4">
+      <div class="layer">
+        <h3><span class="dot cyan"></span>Ingestion</h3>
+        <ul>
+          <li>COPY INTO (idempotent)</li>
+          <li>Auto Loader cloudFiles</li>
+          <li>Audit: _source_file, _ingest_ts</li>
+        </ul>
+        <p>Batch + exactly-once streaming into Delta.</p>
+      </div>
+      <div class="layer">
+        <h3><span class="dot bronze"></span>Bronze</h3>
+        <ul>
+          <li>bronze_orders</li>
+          <li>bronze_order_items</li>
+          <li>bronze_customers</li>
+          <li>bronze_products</li>
+          <li>bronze_payments</li>
+          <li>bronze_reviews</li>
+        </ul>
+        <p>Raw as-is, all strings, fully traceable.</p>
+      </div>
+      <div class="layer">
+        <h3><span class="dot silver"></span>Silver</h3>
+        <ul>
+          <li>silver_orders</li>
+          <li>silver_order_items</li>
+          <li>silver_customers</li>
+          <li>silver_products</li>
+          <li>silver_payments</li>
+          <li>silver_reviews</li>
+        </ul>
+        <p>Deduped, typed, partitioned by month.</p>
+      </div>
+      <div class="layer">
+        <h3><span class="dot gold"></span>Gold</h3>
+        <ul>
+          <li>dim_customer</li>
+          <li>dim_product</li>
+          <li>dim_seller</li>
+          <li>dim_date</li>
+          <li>fact_sales</li>
+          <li>gold_daily_revenue</li>
+        </ul>
+        <p>Star schema + metrics, analytics-ready.</p>
+      </div>
+    </div>
+
+    <div class="metric-row">
+      <div class="metric"><div class="num">112,650</div><div class="lbl">line items processed</div></div>
+      <div class="metric"><div class="num">99,441</div><div class="lbl">orders in the fact model</div></div>
+      <div class="metric"><div class="num">0</div><div class="lbl">duplicates after silver dedupe</div></div>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <div class="section-label">04 · Data Quality Findings</div>
+    <h2 class="block">Real dirty data, real fixes.</h2>
+    <div class="finding">
+      <b>1,205 duplicate review IDs in the source</b>
+      <p>The Olist reviews file ships with ~1,205 duplicated <code>review_id</code>s. Bronze preserved them as-is; Silver deduplicated on the business key — a textbook medallion responsibility.</p>
+    </div>
+    <div class="finding">
+      <b>A NULL-keyed order item was rejected</b>
+      <p>One line item had no <code>order_id</code>. A referential-integrity check (NULL-safe LEFT JOIN) caught it, and the Gold fact layer's inner join keeps it out of the business models.</p>
+    </div>
+    <div class="finding">
+      <b>The NOT IN / NULL trap</b>
+      <p>A <code>NOT IN</code> subquery silently returned nothing for NULL keys, while the LEFT JOIN found the real row. Documented the semantics — worth an interview story on its own.</p>
+    </div>
+    <div class="finding">
+      <b>775 orders have no line items</b>
+      <p>Cancelled / <code>unavailable</code> orders legitimately exist with zero items. Verified, not "fixed" — the pipeline documents reality instead of hiding it.</p>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <div class="section-label">05 · Evidence</div>
+    <h2 class="block">Proof, not promises.</h2>
+    <p class="lead">Every claim above was verified in Databricks, not assumed — screenshots from the actual run: the exactly-once streaming proof, the silver dedupe checks, and the gold star-schema queries.</p>
+
+    <div class="gal-group">
+      <h3><span>Bronze</span> — idempotent COPY INTO ingestion</h3>
+      <div class="gallery">
+        <div class="shot"><img src="screenshots/bronze-copy-into.png" alt="COPY INTO cell loading bronze_reviews" onerror="this.style.display='none'"/><div class="cap">Bronze reviews loaded via COPY INTO — re-runs stay idempotent, 104,162 rows</div></div>
+        <div class="shot"><img src="screenshots/bronze-reviews-duplicate-ids.png" alt="Reviews rows vs distinct review IDs" onerror="this.style.display='none'"/><div class="cap">Reviews finding: 104,162 rows vs 102,957 distinct IDs — 1,205 duplicates exist in the source</div></div>
+      </div>
+    </div>
+
+    <div class="gal-group">
+      <h3><span>Silver</span> — dedupe, typing, referential integrity</h3>
+      <div class="gallery">
+        <div class="shot"><img src="screenshots/silver-verification.png" alt="Silver tables rows equal distinct keys" onerror="this.style.display='none'"/><div class="cap">Every silver table: rows = distinct keys — zero duplicates</div></div>
+        <div class="shot"><img src="screenshots/silver-integrity-zero-orphans.png" alt="Orphan and null key checks returning zero" onerror="this.style.display='none'"/><div class="cap">Referential integrity: 0 orphan order_items, 0 NULL order_ids after the drop</div></div>
+        <div class="shot"><img src="screenshots/sql-not-in-trap.png" alt="NOT IN returning no rows" onerror="this.style.display='none'"/><div class="cap">The NOT IN / NULL trap — silently returned nothing; the LEFT JOIN found the real row</div></div>
+        <div class="shot"><img src="screenshots/orders-without-items.png" alt="775 orders without line items" onerror="this.style.display='none'"/><div class="cap">775 orders have no line items — legitimately cancelled / unavailable, documented not hidden</div></div>
+      </div>
+    </div>
+
+    <div class="gal-group">
+      <h3><span>Gold</span> — star schema + analytical SQL</h3>
+      <div class="gallery">
+        <div class="shot"><img src="screenshots/gold-table-counts.png" alt="Gold star schema table counts" onerror="this.style.display='none'"/><div class="cap">Star schema row counts — 99,441 orders, 32,951 products, 852 days in fact_sales</div></div>
+        <div class="shot"><img src="screenshots/gold-monthly-revenue.png" alt="Monthly revenue and GMV by month" onerror="this.style.display='none'"/><div class="cap">Monthly revenue & GMV trend from fact_sales — the classic Olist growth curve</div></div>
+      </div>
+    </div>
+
+    <div class="gal-group">
+      <h3><span>Streaming</span> — exactly-once Auto Loader</h3>
+      <div class="gallery">
+        <div class="shot"><img src="screenshots/streaming-files-landed.png" alt="Two incremental files landing" onerror="this.style.display='none'"/><div class="cap">Two incremental waves land in streaming_landing: 4,000 + 2,000 rows</div></div>
+        <div class="shot"><img src="screenshots/streaming-rows-by-source.png" alt="bronze_stream_orders grouped by source file" onerror="this.style.display='none'"/><div class="cap">bronze_stream_orders grouped by source file — 4,000 + 2,000 picked up</div></div>
+        <div class="shot"><img src="screenshots/streaming-total-6000.png" alt="Streaming total of 6000 rows" onerror="this.style.display='none'"/><div class="cap">Final count: 6,000 — not 8,000. The idempotent re-run proved exactly-once pickup</div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <div class="section-label">06 · What This Taught Me</div>
+    <h2 class="block">Skills shipped, not just studied.</h2>
+    <ul class="learn">
+      <li>Medallion architecture on Delta Lake — why raw stays immutable and each layer owns one responsibility.</li>
+      <li>Idempotent ingestion with COPY INTO (tracked files, safe re-runs, 0 duplicates).</li>
+      <li>Exactly-once streaming with Auto Loader — checkpointing, schema inference, incremental file pickup.</li>
+      <li>Partition pruning + ZORDER for cost-aware query performance.</li>
+      <li>Star-schema modeling, window functions, CTEs, and referential-integrity testing in SQL.</li>
+      <li>Declarative pipelines in Delta Live Tables (Lakeflow) — the repo includes the DLT version, ready to run on a full workspace.</li>
+      <li>Debugging real ingestion failures under SQL semantics (NOT IN vs LEFT JOIN, multiline CSV, schema mismatch).</li>
+    </ul>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <div class="section-label">07 · Next Steps</div>
+    <h2 class="block">What comes after bronze → gold.</h2>
+    <div class="next-card">
+      On a full Databricks workspace (free 14-day trial): run the Delta Live Tables pipeline to publish the DLT graph, orchestrate Bronze → Silver → Gold → Dashboard as a scheduled multi-task job, and publish the sales dashboard over <code>fact_sales</code>. The notebooks are written so the same code ports over unchanged.
+    </div>
+  </div>
+</section>
+
+</body>
+</html>
