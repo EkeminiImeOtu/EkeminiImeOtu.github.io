@@ -52,7 +52,7 @@
   /* ---------- Header ---------- */
   .header { text-align: center; margin-bottom: 34px; }
   .title {
-    font-size: 52px;
+    font-size: clamp(38px, 6vw, 52px);
     font-weight: 800;
     letter-spacing: -1px;
     background: linear-gradient(90deg, #ffffff 0%, #bfdbfe 40%, #a78bfa 100%);
@@ -69,7 +69,7 @@
   }
   .subtitle {
     margin-top: 10px;
-    font-size: 20px;
+    font-size: clamp(15px, 2.6vw, 20px);
     color: var(--muted);
     letter-spacing: 0.3px;
   }
@@ -247,6 +247,45 @@
     color: var(--text);
   }
   .tech.acc { border-color: rgba(163,230,53,0.4); color: #d9ff7a; }
+
+  /* ---------- Responsive ---------- */
+  @media (max-width: 900px) {
+    body { padding: 18px 10px; }
+    .canvas { padding: 24px 14px 20px; border-radius: 16px; }
+
+    .two-col, .medallion, .three-col { grid-template-columns: 1fr; gap: 16px; }
+    .medallion { gap: 16px; }
+    .three-col { gap: 16px; }
+
+    .header { margin-bottom: 24px; }
+    .badges { gap: 8px; margin-top: 14px; }
+    .badge { font-size: 12.5px; padding: 6px 12px; }
+    .badge .dot { width: 8px; height: 8px; }
+
+    .flow-arrow { font-size: 16px; margin: 16px 0; letter-spacing: 4px; }
+
+    .layer-title { flex-wrap: wrap; gap: 8px; margin-bottom: 12px; }
+    .layer-title .tag { font-size: 12px; padding: 5px 11px; }
+    .layer-title .desc { font-size: 14px; width: 100%; }
+    .layer-title .rule { display: none; }
+
+    .card { padding: 18px 16px; }
+    .card h3 { font-size: 19px; }
+    .card p { font-size: 14px; }
+    .card li { font-size: 13.5px; }
+
+    .medal-head { padding: 14px 16px; gap: 12px; }
+    .medal-head .icon { width: 40px; height: 40px; font-size: 20px; border-radius: 12px; }
+    .medal-head .name { font-size: 21px; }
+    .medal-head .motto { font-size: 11.5px; }
+    .medal-body { padding: 6px 16px 16px; gap: 12px; }
+    .tbl { font-size: 12.5px; padding: 8px 10px; }
+    .note { font-size: 12.5px; }
+
+    .footer { flex-direction: column; align-items: flex-start; gap: 12px; }
+    .footer .left { font-size: 13.5px; }
+    .tech { font-size: 12px; padding: 6px 12px; }
+  }
 </style>
 </head>
 <body>
@@ -279,7 +318,7 @@
         <ul>
           <li>Full entity relationships across 9 tables</li>
           <li>Messy real-world quality → perfect for cleansing</li>
-          <li>Lands raw in <code style="color:var(--cyan)">/FileStore/landing/</code></li>
+          <li>Lands raw in <code style="color:var(--cyan)">/Volumes/shopstream/shopstream/raw_uploads/olist/</code></li>
         </ul>
       </div>
       <div class="card green">
@@ -288,7 +327,7 @@
         <p>Simulated real-time stream — new order files land every few seconds to exercise a production-style streaming ingestion path, replayed from the source data.</p>
         <ul>
           <li>Drops new CSV batches continuously</li>
-          <li>Trickles into <code style="color:var(--green)">/FileStore/streaming/landing/</code></li>
+          <li>Trickles into <code style="color:var(--green)">/Volumes/shopstream/shopstream/streaming_landing/orders</code></li>
           <li>Puts exactly-once streaming to the test</li>
         </ul>
       </div>
@@ -392,10 +431,10 @@
           <div class="tables">
             <div class="tbl">dim_customer</div>
             <div class="tbl">dim_product</div>
+            <div class="tbl">dim_seller</div>
             <div class="tbl">dim_date</div>
             <div class="tbl">fact_sales</div>
             <div class="tbl">gold_daily_revenue</div>
-            <div class="tbl">gold_top_products</div>
           </div>
           <div class="note">Star-schema business models + curated aggregates built for fast analytical queries.</div>
           <span class="pill">Star schema · aggregates · analytics-ready</span>
